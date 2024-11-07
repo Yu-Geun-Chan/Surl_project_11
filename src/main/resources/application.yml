@@ -9,6 +9,9 @@ spring:
     username: root
     password: koreait123414
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
 custom:
   site:
     name: "My Site"
