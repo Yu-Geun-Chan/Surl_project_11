@@ -47,12 +47,12 @@ public class NotProd {
         // (DELETE 개념 -> 단순 삭제, AUTO_INCREMENT는 적용된건 날리지 못하기에 id값은 증가된 상태.)
 //      articleRepository.deleteAll();
 
-        Article article1 = Article.builder().
-                title("제목1")
+        Article article1 = Article.builder()
+                .title("제목1")
                 .body("내용1").build();
 
-        Article article2 = Article.builder().
-                title("제목2")
+        Article article2 = Article.builder()
+                .title("제목2")
                 .body("내용2").build();
 
         // 쓰기전용 트랜잭션
@@ -72,7 +72,7 @@ public class NotProd {
 
         List<Article> articles = articleRepository.findAll(); // JpaRepository 기본 제공
 
-        List<Article> articlesByInId =  articleRepository.findByIdInOrderByTitleDescIdAsc(List.of(1L, 2L, 3L));
+        List<Article> articlesByInId = articleRepository.findByIdInOrderByTitleDescIdAsc(List.of(1L, 2L, 3L));
 
         List<Article> articlesFindByLikeTitle = articleRepository.findByTitleContaining("제목");
 

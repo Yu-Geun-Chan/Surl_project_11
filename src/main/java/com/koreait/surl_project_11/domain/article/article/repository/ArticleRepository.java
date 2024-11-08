@@ -14,6 +14,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     // SQL2 (SELECT * FROM article WHERE title LIKE = '%?%')을 JpaRepository 메서드로 구현
     public List<Article> findByTitleContaining(String keyword); // WHERE title LIKE %?%
 
-    // SQL3 (SELECT * FROM article WHERE title = '?' AND `body` = '?')을 JpaRepository 메서드로 구현
+    // SQL3 (SELECT * FROM article WHERE title = '?' AND `body` = '?')을 JpaRepository 메서 드로 구현
     public List<Article> findByTitleAndBody(String title, String body); // WHERE title = ? AND `body` = ?
 }
