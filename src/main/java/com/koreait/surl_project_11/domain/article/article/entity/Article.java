@@ -13,6 +13,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor // @Entity 쓸거면 필수
 @AllArgsConstructor // @Builder 쓸거면 필수
 @Getter
+@Setter
 public class Article {
 
     @Id // 이거 PK(Primary Key)라고 알려주는 것.
