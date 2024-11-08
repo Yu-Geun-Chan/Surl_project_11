@@ -70,7 +70,13 @@ public class NotProd {
         // Optional : 0 ~ 1
         Optional<Article> opArticle = articleRepository.findById(2L); // JpaRepository 기본 제공
 
-        List<Article> articles = articleRepository.findAll(); // JpaRepository 기본 제공\
+        List<Article> articles = articleRepository.findAll(); // JpaRepository 기본 제공
+
+        List<Article> articlesByInId =  articleRepository.findByIdInOrderByTitleDescIdAsc(List.of(1L, 2L, 3L));
+
+        List<Article> articlesFindByLikeTitle = articleRepository.findByTitleContaining("제목");
+
+        List<Article> articlesFindByTitleAndBody = articleRepository.findByTitleAndBody("제목", "내용");
     }
 }
 
