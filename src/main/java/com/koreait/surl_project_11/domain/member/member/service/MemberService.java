@@ -23,7 +23,7 @@ public class MemberService {
 //      ==v1==
 //      boolean present = findByUsername(username).isPresent();
 //      if (present) {
-//          throw new GlobalException("400-1", "이미 존재하는 아이디입니다.");
+//          throw new GlobalException("400-1", "이미 존재하는 아이디입니다.")
 //      }
 //      ==v2==
         findByUsername(username).ifPresent(m -> {
