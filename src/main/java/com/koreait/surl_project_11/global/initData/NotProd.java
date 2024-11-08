@@ -2,6 +2,10 @@ package com.koreait.surl_project_11.global.initData;
 
 import com.koreait.surl_project_11.domain.article.article.entity.Article;
 import com.koreait.surl_project_11.domain.article.article.service.ArticleService;
+import com.koreait.surl_project_11.domain.member.member.entity.Member;
+import com.koreait.surl_project_11.domain.member.member.service.MemberService;
+import com.koreait.surl_project_11.global.exception.GlobalException;
+import com.koreait.surl_project_11.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
@@ -28,6 +32,7 @@ public class NotProd {
     private NotProd self;
 
     private final ArticleService articleService;
+    private final MemberService memberService;
 
     @Bean // 개발자가 new 하지 않아도 스프링부트가 직접 관리하는 객체 -> 실행될 때 자동으로!
     public ApplicationRunner initNotProd() {
@@ -44,11 +49,16 @@ public class NotProd {
         // (TRUNCATE 개념 -> 테이블 초기화, AUTO_INCREMENT 적용됐던 것도 삭제.)
         if (articleService.count() > 0) return;
 
-        // Article 테이블의 데이터를 지우고 실행하겠다
-        // (DELETE 개념 -> 단순 삭제, AUTO_INCREMENT는 적용된건 날리지 못하기에 id값은 증가된 상태.)
-//      articleRepository.deleteAll();
-
         // 쓰기전용 트랜잭션
+        Member member1 = memberService.join("user1", "1234", "유저 1").getData();
+        Member member2 = memberService.join("user2", "1234", "유저 2").getData();
+
+        try {
+            RsData<Member> joinRs = memberService.join("user2", "1234", "유저 2");
+        } catch (GlobalException e) {
+            System.out.println("e.getMsg() : " + e.getRsData().getMsg());
+            System.out.println("e.getStatusCode() : " + e.getRsData().getStatusCode());
+        }
 
         Article article1 = articleService.write("제목 1", "내용 1").getData();
         Article article2 = articleService.write("제목 2", "내용 2").getData();
@@ -61,10 +71,11 @@ public class NotProd {
     @Transactional
     public void work2() {
         // List : 0 ~ N (넣을 수 있는 값의 개수)
-        // Optional : 0 ~ 1
+        // Optional : 0 ~ 1 (넣을 수 있는 값의 개수)
         Optional<Article> opArticle = articleService.findById(2L); // JpaRepository 기본 제공
 
         List<Article> articles = articleService.findAll(); // JpaRepository 기본 제공
     }
+
 }
 
