@@ -10,8 +10,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity // 이거 가지고 article 테이블 만들거임.
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor // @Entity 쓸거면 필수
+@AllArgsConstructor // @Builder 쓸거면 필수
 @Getter
 public class Article {
 
