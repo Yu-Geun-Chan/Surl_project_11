@@ -2,6 +2,7 @@ package com.koreait.surl_project_11.domain.article.article.service;
 
 import com.koreait.surl_project_11.domain.article.article.entity.Article;
 import com.koreait.surl_project_11.domain.article.article.repository.ArticleRepository;
+import com.koreait.surl_project_11.domain.member.member.entity.Member;
 import com.koreait.surl_project_11.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,9 @@ public class ArticleService {
     // - 결과 코드
     // - 10분 안에 5개 이상 작성 시 실패하도록
     @Transactional // (readOnly = true) 아닌경우는 따로 @Transactional 명시해줘야한다.
-    public RsData<Article> write(String title, String body) {
+    public RsData<Article> write(Member member, String title, String body) {
         Article article = Article.builder()
+                .author(member)
                 .title(title)
                 .body(body)
                 .build();

@@ -60,8 +60,12 @@ public class NotProd {
             System.out.println("e.getStatusCode() : " + e.getRsData().getStatusCode());
         }
 
-        Article article1 = articleService.write("제목 1", "내용 1").getData();
-        Article article2 = articleService.write("제목 2", "내용 2").getData();
+        Article article1 = articleService.write(member1, "제목 1", "내용 1").getData();
+        Article article2 = articleService.write(member1, "제목 2", "내용 2").getData();
+
+        Article article3 = articleService.write(member2, "제목 1", "내용 1").getData();
+        Article article4 = articleService.write(member2, "제목 2", "내용 2").getData();
+
 
         article2.setTitle("제목2-2");
 
