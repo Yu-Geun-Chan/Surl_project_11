@@ -44,4 +44,9 @@ public class MemberService {
     private Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
     }
+
+    // findById랑 똑같다고 생각해라.
+    public Member getReferenceById(long id) {
+        return memberRepository.getReferenceById(id);
+    }
 }
