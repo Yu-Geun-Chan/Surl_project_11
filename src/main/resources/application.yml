@@ -5,10 +5,14 @@ spring:
     active: dev
     include: secret
   datasource:
-    url: jdbc:postgresql://localhost:5432/surl_dev
-    username: postgres
-    password: koreait123414
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:./db_dev;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+#    url: jdbc:postgresql://localhost:5432/surl_dev
+#    username: postgres
+#    password: koreait123414
+#    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update

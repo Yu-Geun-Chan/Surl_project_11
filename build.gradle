@@ -30,8 +30,12 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// MySQL
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	// PostgreSQL
 	runtimeOnly 'org.postgresql:postgresql'
+	// H2
+	runtimeOnly 'com.h2database:h2'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
