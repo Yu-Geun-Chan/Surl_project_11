@@ -2,7 +2,7 @@ package com.koreait.surl_project_11.domain.member.member.service;
 
 import com.koreait.surl_project_11.domain.member.member.entity.Member;
 import com.koreait.surl_project_11.domain.member.member.repository.MemberRepository;
-import com.koreait.surl_project_11.global.exception.GlobalException;
+import com.koreait.surl_project_11.global.exceptions.GlobalException;
 import com.koreait.surl_project_11.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,12 +41,16 @@ public class MemberService {
         return RsData.of("회원가입이 완료되었습니다.", member);
     }
 
-    private Optional<Member> findByUsername(String username) {
+    public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
     }
 
     // findById랑 똑같다고 생각해라.
     public Member getReferenceById(long id) {
         return memberRepository.getReferenceById(id);
+    }
+
+    public long count() {
+        return memberRepository.count();
     }
 }

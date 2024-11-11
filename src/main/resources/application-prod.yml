@@ -1,5 +1,26 @@
 server:
   port: 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://cwy-surl-project-db.internal:5432/surl_prod
+    username: postgres
+    password: u3Ge4ShhIGXVjWw
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+        highlight_sql: false
+        use_sql_comments: false
+logging:
+  level:
+    com.koreait.surl_project_11: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.orm.jdbc.bind: INFO
+    org.hibernate.orm.jdbc.extract: INFO
+    org.springframework.transaction.interceptor: INFO
 custom:
   site:
     name: "My Site Prod"

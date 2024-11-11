@@ -11,10 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Profile("!prod") // !prod == dev(개발 모드) or test(테스트 모드) 일 때 실행하겠다.
 @Configuration
@@ -33,10 +31,10 @@ public class NotProd {
     private final MemberService memberService;
 
     @Bean // 개발자가 new 하지 않아도 스프링부트가 직접 관리하는 객체 -> 실행될 때 자동으로!
+    @Order(4)
     public ApplicationRunner initNotProd() {
         return args -> {
             self.work1();
-            self.work2();
         };
     }
 
@@ -48,29 +46,15 @@ public class NotProd {
         if (articleService.count() > 0) return;
 
         // 쓰기전용 트랜잭션
-        Member member1 = memberService.join("user1", "1234", "유저 1").getData();
-        Member member2 = memberService.join("user2", "1234", "유저 2").getData();
+        Member memberUser1 = memberService.findByUsername("user1").get();
+        Member memberUser2 = memberService.findByUsername("user2").get();
 
-        Article article1 = articleService.write(member1, "제목 1", "내용 1").getData();
-        Article article2 = articleService.write(member1, "제목 2", "내용 2").getData();
+        Article article1 = articleService.write(memberUser1, "제목 1", "내용 1").getData();
+        Article article2 = articleService.write(memberUser1, "제목 2", "내용 2").getData();
 
-        Article article3 = articleService.write(member2, "제목 1", "내용 1").getData();
-        Article article4 = articleService.write(member2, "제목 2", "내용 2").getData();
+        Article article3 = articleService.write(memberUser2, "제목 3", "내용 3").getData();
+        Article article4 = articleService.write(memberUser2, "제목 4", "내용 4").getData();
 
-
-        article2.setTitle("제목2-2");
-
-        articleService.delete(article1);
     }
-
-    @Transactional
-    public void work2() {
-        // List : 0 ~ N (넣을 수 있는 값의 개수)
-        // Optional : 0 ~ 1 (넣을 수 있는 값의 개수)
-        Optional<Article> opArticle = articleService.findById(2L); // JpaRepository 기본 제공
-
-        List<Article> articles = articleService.findAll(); // JpaRepository 기본 제공
-    }
-
 }
 
