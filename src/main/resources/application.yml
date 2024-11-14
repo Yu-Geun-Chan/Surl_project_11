@@ -7,15 +7,15 @@ spring:
   profiles:
     active: dev
     include: secret
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.session.SessionAutoConfiguration
   datasource:
     url: jdbc:h2:./db_dev;MODE=MySQL
     username: sa
     password:
     driver-class-name: org.h2.Driver
-  #    url: jdbc:postgresql://localhost:5432/surl_dev
-  #    username: postgres
-  #    password: koreait123414
-  #    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:

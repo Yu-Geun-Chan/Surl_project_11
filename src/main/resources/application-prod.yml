@@ -1,11 +1,21 @@
 server:
   port: 8080
+  shutdown: graceful # 스프링부트가 꺼질때 부드럽게 꺼지도록
 spring:
+  autoconfigure:
+    exclude:
+  lifecycle:
+    timeout-per-shutdown-phase: 1h # 스프링부트가 종료 요청을 받은 후 기다려줄 수 있는 시간
   datasource:
     url: jdbc:mysql://172.17.0.1:3306/surl_prod
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: 172.17.0.1
+      port: 6379
+      password: ${custom.secret.spring.data.redis.password}
   jpa:
     hibernate:
       ddl-auto: update
