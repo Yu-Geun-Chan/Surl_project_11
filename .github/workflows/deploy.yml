@@ -9,7 +9,7 @@ on:
       - 'readme.md'
       - 'infraScript/**'
     branches:
-      - 'main'
+      - 'main' # 본인 브랜치 확인
 jobs:
   makeTagAndRelease:
     runs-on: ubuntu-latest
@@ -33,6 +33,7 @@ jobs:
           body: ${{ steps.create_tag.outputs.changelog }}
           draft: false
           prerelease: false
+  ## 자동화 코드
   buildImageAndPush:
     name: 도커 이미지 빌드와 푸시
     needs: makeTagAndRelease
@@ -79,7 +80,7 @@ jobs:
           instance-ids: "i-0b0c759179763a6b4" # 본인 인스턴스 ID
           working-directory: /
           comment: Deploy
-          command: | # surl : 도커이미지명, Yu-Geun-Chan : 깃허브 ID, Surl_project_11 : 깃허브 리포지터리명
+          command: | # surl : 도커이미지명, Yu-Geun-Chan : 깃허브 ID, Surl_project_11 : 깃허브 리포지터리명, main : 본인 브랜치
             mkdir -p /dockerProjects/surl
             curl -o /dockerProjects/surl/zero_downtime_deploy.py https://raw.githubusercontent.com/Yu-Geun-Chan/Surl_project_11/main/infraScript/zero_downtime_deploy.py
             chmod +x /dockerProjects/surl/zero_downtime_deploy.py

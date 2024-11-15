@@ -18,6 +18,10 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+    public Optional<Member> findByUsername(String username) {
+        return memberRepository.findByUsername(username);
+    }
+
     @Transactional()
     public RsData<Member> join(String username, String password, String nickname) {
 //      ==v1==
@@ -39,10 +43,6 @@ public class MemberService {
         memberRepository.save(member);
 
         return RsData.of("회원가입이 완료되었습니다.", member);
-    }
-
-    public Optional<Member> findByUsername(String username) {
-        return memberRepository.findByUsername(username);
     }
 
     // findById랑 똑같다고 생각해라.
