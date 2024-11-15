@@ -1,6 +1,5 @@
 package com.koreait.surl_project_11.domain.member.member.controller;
 
-import com.koreait.surl_project_11.domain.member.member.entity.Member;
 import com.koreait.surl_project_11.domain.member.member.service.MemberService;
 import com.koreait.surl_project_11.global.exceptions.GlobalException;
 import com.koreait.surl_project_11.global.rsData.RsData;
@@ -31,7 +30,6 @@ public class MemberController {
         if (Ut.str.isBlank(nickname)) {
             throw new GlobalException("400-3", "nickname을 입력해");
         }
-        RsData<Member> joinRs = memberService.join(username, password, nickname);
-        return joinRs;
+        return memberService.join(username, password, nickname);
     }
 }
