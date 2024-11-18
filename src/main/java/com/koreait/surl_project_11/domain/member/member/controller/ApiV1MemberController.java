@@ -21,7 +21,7 @@ public class ApiV1MemberController {
 
     @AllArgsConstructor
     @Getter
-    public static class MemberJoinRequestBody {
+    public static class MemberJoinReqBody {
         @NotBlank // -> 써먹으려면 객체 선언부에 @Valid 어노테이션을 붙여야한다.
         private String username;
         @NotBlank
@@ -30,17 +30,23 @@ public class ApiV1MemberController {
         private String nickname;
     }
 
-    // POST api/v1/members/join
-    @PostMapping("") // "join"을 쓰지않고 ""(빈문자열)로 해도 된다. why? -> POST니까
-    public RsData<Member> join(
-            @RequestBody @Valid MemberJoinRequestBody requestBody) { // @Valid : @NotBlank 쓰려면 해야됨
-        return memberService.join(requestBody.username, requestBody.password, requestBody.nickname);
+    // 응답 양식
+    @AllArgsConstructor
+    @Getter
+    public static class MemberJoinRespBody {
+        Member item;
     }
 
-    @GetMapping("/testThrowIllegalArgumentException")
-    @ResponseBody
-    public RsData<Member> testThrowIllegalArgumentException() {
-        throw new IllegalArgumentException("IllegalArgumentException");
+    // POST api/v1/members/join
+    @PostMapping("") // "join"을 쓰지않고 ""(빈문자열)로 해도 된다. why? -> POST니까
+    public RsData<MemberJoinRespBody> join(
+            @RequestBody @Valid MemberJoinReqBody requestBody // @Valid : @NotBlank 쓰려면 해야됨
+    ) {
+        RsData<Member> joinRs = memberService.join(requestBody.username, requestBody.password, requestBody.nickname);
+
+        return joinRs.newDataOf(
+                new MemberJoinRespBody(joinRs.getData())
+        );
     }
 }
 
