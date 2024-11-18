@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 public class GlobalExceptionHandlers {
     @ExceptionHandler(GlobalException.class)
-    // @ResponseStatus(HttpStatus.BAD_REQUEST)
+    // @ResponseStatus(HttpStatus.BAD_REQUEST) -> ResponseEntity를 쓰면 안붙여도 된다.
     @ResponseBody
     public ResponseEntity<RsData<Empty>> handleException(GlobalException ex) {
         RsData<Empty> rsData = ex.getRsData();
