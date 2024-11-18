@@ -22,11 +22,11 @@ public class ApiV1MemberController {
     @AllArgsConstructor
     @Getter
     public static class MemberJoinRequestBody {
-        @NotBlank(message = "이름을 입력하세요.") // -> 써먹으려면 객체 선언부에 @Valid 어노테이션을 붙여야한다.
+        @NotBlank // -> 써먹으려면 객체 선언부에 @Valid 어노테이션을 붙여야한다.
         private String username;
-        @NotBlank(message = "비밀번호를 입력하세요.")
+        @NotBlank
         private String password;
-        @NotBlank(message = "닉네임을 입력하세요.")
+        @NotBlank
         private String nickname;
     }
 
