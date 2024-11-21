@@ -71,7 +71,7 @@ public class ApiV1SurlController {
     // /api/v1/surls/1
     // /api/v1/surls?id=1
     @GetMapping("/{id}")
-    @Transactional
+    // @Transactional 안한 이유 : 컨트롤러 자체에 @Transactional(readOnly = true)가 붙어있어서 적용되니까.
     public RsData<SurlGetRespBody> get(
             @PathVariable long id
     ) {
