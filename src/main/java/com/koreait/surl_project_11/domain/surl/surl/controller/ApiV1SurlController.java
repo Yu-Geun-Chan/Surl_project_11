@@ -7,6 +7,7 @@ import com.koreait.surl_project_11.domain.surl.surl.service.SurlService;
 import com.koreait.surl_project_11.global.exceptions.GlobalException;
 import com.koreait.surl_project_11.global.rq.Rq;
 import com.koreait.surl_project_11.global.rsData.RsData;
+import com.koreait.surl_project_11.standard.dto.Empty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -69,8 +70,7 @@ public class ApiV1SurlController {
     // /api/v1/surls/{id}
     // /api/v1/surls/1
     // /api/v1/surls?id=1
-    @PostMapping("/{id}")
-    @ResponseBody
+    @GetMapping("/{id}")
     @Transactional
     public RsData<SurlGetRespBody> get(
             @PathVariable long id
@@ -83,5 +83,18 @@ public class ApiV1SurlController {
                         new SurlDto(surl)
                 )
         );
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    // 딱히 리턴할게 없어! -> 제네릭안에 Empty
+    public RsData<Empty> delete(
+            @PathVariable long id
+    ) {
+        Surl surl = surlService.findById(id).orElseThrow(GlobalException.E404::new);
+
+        surlService.delete(surl);
+
+        return RsData.OK;
     }
 }
