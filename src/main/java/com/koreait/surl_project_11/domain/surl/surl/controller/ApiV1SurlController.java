@@ -2,6 +2,7 @@ package com.koreait.surl_project_11.domain.surl.surl.controller;
 
 import com.koreait.surl_project_11.domain.auth.service.AuthService;
 import com.koreait.surl_project_11.domain.member.member.entity.Member;
+import com.koreait.surl_project_11.domain.member.member.service.MemberService;
 import com.koreait.surl_project_11.domain.surl.surl.dto.SurlDto;
 import com.koreait.surl_project_11.domain.surl.surl.entity.Surl;
 import com.koreait.surl_project_11.domain.surl.surl.service.SurlService;
@@ -30,6 +31,7 @@ public class ApiV1SurlController {
     private final Rq rq;
     private final SurlService surlService;
     private final AuthService authService;
+    private final MemberService memberService;
 
     @AllArgsConstructor
     @Getter
@@ -101,11 +103,14 @@ public class ApiV1SurlController {
 
     @GetMapping("")
     // @Transactional 안한 이유 : 컨트롤러 자체에 @Transactional(readOnly = true)가 붙어있어서 적용되니까.
-    public RsData<SurlGetItemsRespBody> getItems() {
-        Member member = rq.getMember();
+    public RsData<SurlGetItemsRespBody> getItems(
+            String actorUsername
+    ) {
+        Member loginedMember = memberService.findByUsername(actorUsername).orElseThrow(GlobalException.E404::new);
 
-        // Page
-        // QueryDSL
+        rq.setMember(loginedMember);
+
+        Member member = rq.getMember();
 
         List<Surl> surls = surlService.findByAuthorOrderByIdDesc(member);
 

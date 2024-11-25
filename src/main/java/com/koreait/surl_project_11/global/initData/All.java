@@ -20,6 +20,7 @@ public class All {
     @Autowired
     private All self;
     private final MemberService memberService;
+
     @Bean
     @Order(3)
     public ApplicationRunner initAll() {
@@ -27,10 +28,14 @@ public class All {
             self.work1();
         };
     }
+
     @Transactional
     public void work1() {
+
         log.debug("initAll started");
+
         if (memberService.count() > 0) return;
+
         Member memberSystem = memberService.join("system", "1234", "시스템").getData();
         Member memberAdmin = memberService.join("admin", "1234", "관리자").getData();
         Member member1 = memberService.join("user1", "1234", "회원 1").getData();
