@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/surls")
 @RequiredArgsConstructor
@@ -36,6 +38,7 @@ public class ApiV1SurlController {
         private String url;
 
     }
+
     // 응답 양식
     @AllArgsConstructor
     @Getter
@@ -81,6 +84,32 @@ public class ApiV1SurlController {
         return RsData.of(
                 new SurlGetRespBody(
                         new SurlDto(surl)
+                )
+        );
+    }
+
+    // 응답 양식
+    @AllArgsConstructor
+    @Getter
+    public static class SurlGetItemsRespBody {
+        private List<SurlDto> item;
+    }
+
+    @GetMapping("")
+    // @Transactional 안한 이유 : 컨트롤러 자체에 @Transactional(readOnly = true)가 붙어있어서 적용되니까.
+    public RsData<SurlGetItemsRespBody> getItems() {
+        Member member = rq.getMember();
+
+        // Page
+        // QueryDSL
+
+        List<Surl> surls = surlService.findByAuthorOrderByIdDesc(member);
+
+        return RsData.of(
+                new SurlGetItemsRespBody(
+                        surls.stream()
+                                .map(SurlDto::new)
+                                .toList()
                 )
         );
     }

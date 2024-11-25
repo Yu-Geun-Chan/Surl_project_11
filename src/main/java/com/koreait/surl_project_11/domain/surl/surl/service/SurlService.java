@@ -44,4 +44,8 @@ public class SurlService { // 비지니스 로직 처리 담당
     public void delete(Surl surl) {
         surlRepository.delete(surl);
     }
+
+    public List<Surl> findByAuthorOrderByIdDesc(Member author) {
+        return surlRepository.findByAuthorOrderByIdDesc(author);
+    }
 }
