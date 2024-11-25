@@ -80,9 +80,10 @@ public class ApiV1SurlController {
     @GetMapping("/{id}")
     // @Transactional 안한 이유 : 컨트롤러 자체에 @Transactional(readOnly = true)가 붙어있어서 적용되니까.
     public RsData<SurlGetRespBody> get(
-            @PathVariable long id,
-            String actorUsername
+            @PathVariable long id
     ) {
+        rq.getMember(); // member 로딩
+        rq.getMember(); // 빠르게 했으면 좋겠어
 
         Surl surl = surlService.findById(id).orElseThrow(GlobalException.E404::new);
 
