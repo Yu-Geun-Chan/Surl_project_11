@@ -2,11 +2,11 @@ package com.koreait.surl_project_11.global.rq;
 
 import com.koreait.surl_project_11.domain.member.member.entity.Member;
 import com.koreait.surl_project_11.domain.member.member.service.MemberService;
+import com.koreait.surl_project_11.global.exceptions.GlobalException;
+import com.koreait.surl_project_11.standard.util.Ut;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -18,15 +18,21 @@ public class Rq {
     private final HttpServletResponse resp;
     private final MemberService memberService;
 
-    @Getter
-    @Setter
-    private Member member;
+//    @Getter
+//    @Setter
+//    private Member member;
 
-//    public Member getMember() {
-//        // 프록시 객체를 리턴한다. (객체를 만드는데 SQL이 작동하지 않아)
-//        // 프록시 : 효율적
-//        return memberService.getReferenceById(3L); // 3L은 user1 이니까
-//    }
+    public Member getMember() {
+        // 프록시 객체를 리턴한다. (객체를 만드는데 SQL이 작동하지 않아)
+        // 프록시 : 효율적
+        String actorUsername = req.getParameter("actorUsername");
+
+        if (Ut.str.isBlank(actorUsername)) throw new GlobalException("401-1", "인증정보 입력해줘");
+
+        Member loginedMember = memberService.findByUsername(actorUsername).orElseThrow(() -> new GlobalException("401-2", "인증 정보가 올바르지 않아"));
+
+        return loginedMember;
+    }
 
     public String getCurrentUrlPath() {
         return req.getRequestURI();

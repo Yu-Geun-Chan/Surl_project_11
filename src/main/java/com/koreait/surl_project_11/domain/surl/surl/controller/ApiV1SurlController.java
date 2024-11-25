@@ -80,7 +80,8 @@ public class ApiV1SurlController {
     @GetMapping("/{id}")
     // @Transactional 안한 이유 : 컨트롤러 자체에 @Transactional(readOnly = true)가 붙어있어서 적용되니까.
     public RsData<SurlGetRespBody> get(
-            @PathVariable long id
+            @PathVariable long id,
+            String actorUsername
     ) {
 
         Surl surl = surlService.findById(id).orElseThrow(GlobalException.E404::new);
@@ -103,13 +104,7 @@ public class ApiV1SurlController {
 
     @GetMapping("")
     // @Transactional 안한 이유 : 컨트롤러 자체에 @Transactional(readOnly = true)가 붙어있어서 적용되니까.
-    public RsData<SurlGetItemsRespBody> getItems(
-            String actorUsername
-    ) {
-        Member loginedMember = memberService.findByUsername(actorUsername).orElseThrow(GlobalException.E404::new);
-
-        rq.setMember(loginedMember);
-
+    public RsData<SurlGetItemsRespBody> getItems() {
         Member member = rq.getMember();
 
         List<Surl> surls = surlService.findByAuthorOrderByIdDesc(member);
