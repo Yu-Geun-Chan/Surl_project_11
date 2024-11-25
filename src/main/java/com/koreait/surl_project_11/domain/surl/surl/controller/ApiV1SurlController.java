@@ -126,4 +126,38 @@ public class ApiV1SurlController {
 
         return RsData.OK;
     }
+
+    @AllArgsConstructor
+    @Getter
+    public static class SurlModifyReqBody {
+        @NotBlank
+        private String body;
+        @NotBlank
+        private String url;
+
+    }
+
+    // 응답 양식
+    @AllArgsConstructor
+    @Getter
+    public static class SurlModifyRespBody {
+        private SurlDto item;
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public RsData<SurlModifyRespBody> modify(
+            @PathVariable long id,
+            @RequestBody @Valid SurlModifyReqBody reqBody
+    ) {
+        Surl surl = surlService.findById(id).orElseThrow(GlobalException.E404::new);
+
+        RsData<Surl> modifyRs = surlService.modify(surl, reqBody.body, reqBody.url);
+
+        return modifyRs.newDataOf(
+                new SurlModifyRespBody(
+                        new SurlDto(modifyRs.getData())
+                )
+        );
+    }
 }
