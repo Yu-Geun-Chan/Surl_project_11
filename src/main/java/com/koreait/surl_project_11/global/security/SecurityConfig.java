@@ -17,6 +17,18 @@ public class SecurityConfig {
                                 .requestMatchers("/actuator/**").permitAll()
                                 .anyRequest().authenticated()
                 )
+                // h2-console을 위한
+                .headers(
+                        headers ->
+                                headers.frameOptions(
+                                        frameOptions ->
+                                                frameOptions.sameOrigin()
+                                )
+                )
+                .csrf(
+                        csrf ->
+                                csrf.disable()
+                ) // 타임리프, MPA에서는 csrf를 사용한다. 하지만 REST API 방식은 csrf를 끈다.
                 .formLogin(formLogin ->
                         formLogin.permitAll()
                 );
