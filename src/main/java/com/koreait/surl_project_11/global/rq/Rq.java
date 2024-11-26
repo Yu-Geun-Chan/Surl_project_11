@@ -60,13 +60,6 @@ public class Rq {
         return loginedMember;
     }
 
-    private String getCookieValue(String cookieName, String defaultValue) {
-        return Arrays.stream(req.getCookies()) // 쿠키 배열을 스트림으로 변환
-                .filter(cookie -> cookie.getName().equals(cookieName))// 쿠키의 이름이 매개변수로 쓰이게
-                .findFirst() // 첫 번째 요소
-                .map(Cookie::getValue) // 존재하면 쿠키 값으로 매핑
-                .orElse(defaultValue); // 없으면 기본 값
-    }
 
     public String getCurrentUrlPath() {
         return req.getRequestURI();
@@ -74,5 +67,29 @@ public class Rq {
 
     public void setStatusCode(int statusCode) {
         resp.setStatus(statusCode);
+    }
+
+    private String getCookieValue(String cookieName, String defaultValue) {
+        if (req.getCookies() == null) return defaultValue;
+
+        return Arrays.stream(req.getCookies()) // 쿠키 배열을 스트림으로 변환
+                .filter(cookie -> cookie.getName().equals(cookieName))// 쿠키의 이름이 매개변수로 쓰이게
+                .findFirst() // 첫 번째 요소
+                .map(Cookie::getValue) // 존재하면 쿠키 값으로 매핑
+                .orElse(defaultValue); // 없으면 기본 값
+    }
+
+    public void removeCookie(String cookieName) {
+        Cookie cookie = new Cookie(cookieName, null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        resp.addCookie(cookie);
+    }
+
+    public void setCookie(String cookieName, String value) {
+        Cookie cookie = new Cookie(cookieName, value);
+        cookie.setMaxAge(60 * 60 * 24 * 365);
+        cookie.setPath("/");
+        resp.addCookie(cookie);
     }
 }
