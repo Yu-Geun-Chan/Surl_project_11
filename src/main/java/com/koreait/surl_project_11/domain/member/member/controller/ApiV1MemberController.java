@@ -67,11 +67,13 @@ public class ApiV1MemberController {
         @NotBlank
         private String password;
     }
+
     @AllArgsConstructor
     @Getter
     public static class MemberLoginRespBody {
         MemberDto item;
     }
+
     @PostMapping("/login")
     @Transactional
     public RsData<MemberLoginRespBody> login(
@@ -81,12 +83,14 @@ public class ApiV1MemberController {
         if (!member.getPassword().equals(requestBody.password)) {
             throw new GlobalException("401-2", "비번 틀림");
         }
+
         rq.setCookie("actorUsername", member.getUsername());
         rq.setCookie("actorPassword", member.getPassword());
         return RsData.of(
                 "200-1", "로그인 성공", new MemberLoginRespBody(new MemberDto(member))
         );
     }
+
     @DeleteMapping("/logout")
     @Transactional
     public RsData<Empty> logout() {
