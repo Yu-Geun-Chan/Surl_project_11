@@ -55,4 +55,8 @@ public class MemberService {
     public long count() {
         return memberRepository.count();
     }
+
+    public boolean matchPassword(String password, String encodedPassword) {
+        return passwordEncoder.matches(password, encodedPassword);
+    }
 }
