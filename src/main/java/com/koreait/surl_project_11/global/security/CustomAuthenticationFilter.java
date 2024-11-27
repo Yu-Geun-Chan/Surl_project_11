@@ -57,7 +57,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
         }
         // 여기까지 왔다는건 인증을 뚫었다는 것.
         // User : Spring Security가 이해할 수 있는 형태의 Member
-        User user = new User(loginedMember.getUsername(), "", List.of());
+        User user = new User(loginedMember.getId() + "", "", List.of());
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(req, resp); // Filter를 종료하고 다음턴으로 넘긴다.

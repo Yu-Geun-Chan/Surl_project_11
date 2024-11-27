@@ -26,9 +26,9 @@ public class Rq {
         if (member != null) return member; // 메모리 캐싱
 
         // CustomAuthenticationFilter의 인증을 뚫고 온거니까 믿어도 된다.
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        long id = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        member = memberService.findByUsername(name).get();
+        member = memberService.findById(id).get();
 
         return member;
     }
