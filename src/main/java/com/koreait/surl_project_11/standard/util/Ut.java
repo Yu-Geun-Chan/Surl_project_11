@@ -16,6 +16,7 @@ public class Ut {
     }
 
     public static class json {
+        // 예외상황 있으면 알아서 처리해 -> 권장하진 않는다.(lombok 공식사이트에서도 권장하지 않는다고 함)
         @SneakyThrows
         public static String toString(Object obj) {
             return AppConfig.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(obj);
