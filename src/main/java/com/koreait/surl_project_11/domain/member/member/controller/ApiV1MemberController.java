@@ -80,12 +80,12 @@ public class ApiV1MemberController {
             @RequestBody @Valid MemberLoginReqBody requestBody
     ) {
         Member member = memberService.findByUsername(requestBody.username).orElseThrow(() -> new GlobalException("401-1", "해당 회원은 없다"));
-        if (!member.getPassword().equals(requestBody.password)) {
+        if (!memberService.matchPassword(requestBody.password, member.getPassword())) {
             throw new GlobalException("401-2", "비번 틀림");
         }
 
-        rq.setCookie("actorUsername", member.getUsername());
-        rq.setCookie("actorPassword", member.getPassword());
+        rq.setCookie("apiKey", member.getApiKey());
+
         return RsData.of(
                 "200-1", "로그인 성공", new MemberLoginRespBody(new MemberDto(member))
         );

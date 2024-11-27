@@ -14,10 +14,12 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED) // @Entity 쓸거면 필수
 @AllArgsConstructor(access = PROTECTED) // @Builder 쓸거면 필수
 public class Member extends BaseTime {
-    @Column(unique = true)
+    @Column(unique = true) // Unique
     private String username;
     private String password;
     private String nickname;
+    @Column(unique = true)
+    private String apiKey;
 
     public String getName() {
         return nickname;

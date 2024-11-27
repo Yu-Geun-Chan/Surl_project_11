@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -22,6 +23,7 @@ public class SecurityConfig {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
+                                .requestMatchers(HttpMethod.POST,"/api/*/members/", "/api/*/members/login").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll() // permitAll() : 제재하지마
                                 .requestMatchers("/actuator/**").permitAll()
                                 .anyRequest().authenticated() // 위에 2개가 아니라면 로그인을 검사해
