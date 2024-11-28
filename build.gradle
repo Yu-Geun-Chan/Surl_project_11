@@ -49,6 +49,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	// 구형 컨테이너에서 신형 컨테이너로 바뀌면 세션 정보가 이관될 수 있도록
 	implementation 'org.springframework.session:spring-session-data-redis'
+
+	// jwt
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3', 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 }
 
 tasks.named('test') {

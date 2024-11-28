@@ -39,3 +39,5 @@ logging:
 custom:
   site:
     name: "My Site"
+  accessToken:
+    expirationSec: 60
