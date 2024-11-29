@@ -29,6 +29,8 @@ spring:
         format_sql: true
         highlight_sql: true
         use_sql_comments: true
+springdoc:
+  default-produces-media-type: application/json
 logging:
   level:
     com.koreait.surl_project_11: DEBUG
@@ -40,4 +42,4 @@ custom:
   site:
     name: "My Site"
   accessToken:
-    expirationSec: 5
+    expirationSec: 600

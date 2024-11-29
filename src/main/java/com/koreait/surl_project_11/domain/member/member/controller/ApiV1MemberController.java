@@ -10,6 +10,8 @@ import com.koreait.surl_project_11.global.exceptions.GlobalException;
 import com.koreait.surl_project_11.global.rq.Rq;
 import com.koreait.surl_project_11.global.rsData.RsData;
 import com.koreait.surl_project_11.standard.dto.Empty;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -21,9 +23,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/members")
+//@RequestMapping(value = "/api/v1/members", produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
+@Tag(name = "ApiMemberController", description = "회원 CRUD 컨트롤러")
 public class ApiV1MemberController {
 
     private final MemberService memberService;
@@ -52,6 +56,7 @@ public class ApiV1MemberController {
     // POST api/v1/members/join
     @PostMapping("") // "join"을 쓰지않고 ""(빈문자열)로 해도 된다. why? -> POST니까
     @Transactional
+    @Operation(summary = "회원가입")
     public RsData<MemberJoinRespBody> join(
             @RequestBody @Valid MemberJoinReqBody requestBody // @Valid : @NotBlank 쓰려면 해야됨
     ) {
@@ -81,6 +86,7 @@ public class ApiV1MemberController {
 
     @PostMapping("/login")
     @Transactional
+    @Operation(summary = "로그인", description = "성공하면 accessToken, refreshToken 쿠키가 생성됨")
     public RsData<MemberLoginRespBody> login(
             @RequestBody @Valid MemberLoginReqBody requestBody
     ) {
@@ -101,6 +107,7 @@ public class ApiV1MemberController {
 
     @DeleteMapping("/logout")
     @Transactional
+    @Operation(summary = "로그아웃")
     public RsData<Empty> logout() {
         // 쿠키 삭제
         rq.removeCookie("actorUsername");

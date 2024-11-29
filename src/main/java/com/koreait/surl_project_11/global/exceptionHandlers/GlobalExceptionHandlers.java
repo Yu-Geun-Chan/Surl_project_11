@@ -7,11 +7,13 @@ import com.koreait.surl_project_11.standard.dto.Empty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -43,6 +45,7 @@ public class GlobalExceptionHandlers {
 
     @ExceptionHandler(GlobalException.class)
     // @ResponseStatus(HttpStatus.BAD_REQUEST) -> ResponseEntity를 쓰면 안붙여도 된다.
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResponseEntity<RsData<Empty>> handleException(GlobalException ex) {
 
@@ -50,6 +53,7 @@ public class GlobalExceptionHandlers {
 
         return ResponseEntity
                 .status(rsData.getStatusCode())
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(rsData);
     }
 
