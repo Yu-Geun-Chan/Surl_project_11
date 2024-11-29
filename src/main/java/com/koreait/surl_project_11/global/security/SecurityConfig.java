@@ -26,7 +26,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,"/api/*/members/", "/api/*/members/login").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll() // permitAll() : 제재하지마
                                 .requestMatchers("/actuator/**").permitAll()
-                                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**","/swagger-ui.html").permitAll()
+                                .requestMatchers("/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/g/*").permitAll()
                                 .anyRequest().authenticated() // 위에 2개가 아니라면 로그인을 검사해
                 )
                 .headers(
