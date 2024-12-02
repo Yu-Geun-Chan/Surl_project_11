@@ -35,23 +35,6 @@ public class ApiV1SurlController {
     private final AuthService authService;
     private final MemberService memberService;
 
-    @AllArgsConstructor
-    @Getter
-    public static class SurlAddReqBody {
-        @NotBlank
-        private String body;
-        @NotBlank
-        private String url;
-
-    }
-
-    // 응답 양식
-    @AllArgsConstructor
-    @Getter
-    public static class SurlAddRespBody {
-        private SurlDto item;
-    }
-
     @PostMapping("")
     @ResponseBody
     @Transactional
@@ -68,13 +51,6 @@ public class ApiV1SurlController {
                         new SurlDto(addRs.getData())
                 )
         );
-    }
-
-    // 응답 양식
-    @AllArgsConstructor
-    @Getter
-    public static class SurlGetRespBody {
-        private SurlDto item;
     }
 
     // /api/v1/surls/{id}
@@ -98,13 +74,6 @@ public class ApiV1SurlController {
                         new SurlDto(surl)
                 )
         );
-    }
-
-    // 응답 양식
-    @AllArgsConstructor
-    @Getter
-    public static class SurlGetItemsRespBody {
-        private List<SurlDto> item;
     }
 
     @GetMapping("")
@@ -140,23 +109,6 @@ public class ApiV1SurlController {
         return RsData.OK;
     }
 
-    @AllArgsConstructor
-    @Getter
-    public static class SurlModifyReqBody {
-        @NotBlank
-        private String body;
-        @NotBlank
-        private String url;
-
-    }
-
-    // 응답 양식
-    @AllArgsConstructor
-    @Getter
-    public static class SurlModifyRespBody {
-        private SurlDto item;
-    }
-
     @PutMapping("/{id}")
     @Transactional
     @Operation(summary = "수정")
@@ -175,5 +127,53 @@ public class ApiV1SurlController {
                         new SurlDto(modifyRs.getData())
                 )
         );
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class SurlAddReqBody {
+        @NotBlank
+        private String body;
+        @NotBlank
+        private String url;
+
+    }
+
+    // 응답 양식
+    @AllArgsConstructor
+    @Getter
+    public static class SurlAddRespBody {
+        private SurlDto item;
+    }
+
+    // 응답 양식
+    @AllArgsConstructor
+    @Getter
+    public static class SurlGetRespBody {
+        private SurlDto item;
+    }
+
+    // 응답 양식
+    @AllArgsConstructor
+    @Getter
+    public static class SurlGetItemsRespBody {
+        private List<SurlDto> item;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class SurlModifyReqBody {
+        @NotBlank
+        private String body;
+        @NotBlank
+        private String url;
+
+    }
+
+    // 응답 양식
+    @AllArgsConstructor
+    @Getter
+    public static class SurlModifyRespBody {
+        private SurlDto item;
     }
 }

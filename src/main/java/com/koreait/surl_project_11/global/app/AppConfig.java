@@ -14,6 +14,10 @@ public class AppConfig {
 
     @Getter
     public static ObjectMapper objectMapper;
+    @Getter
+    private static String jwtSecretKey;
+    @Getter
+    private static long accessTokenExpirationSec;
 
     // jackson의 Bean을 가져온다.
     @Autowired
@@ -26,16 +30,10 @@ public class AppConfig {
         return new BCryptPasswordEncoder(); // 보안성이 매우 뛰어나다.
     }
 
-    @Getter
-    private static String jwtSecretKey;
-
     @Value("${custom.secret.jwt.secretKey}")
     public void setJwtSecretKey(String jwtSecretKey) {
         this.jwtSecretKey = jwtSecretKey;
     }
-
-    @Getter
-    private static long accessTokenExpirationSec;
 
     @Value("${custom.accessToken.expirationSec}")
     public void setJwtSecretKey(long accessTokenExpirationSec) {

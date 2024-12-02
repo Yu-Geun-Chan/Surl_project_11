@@ -57,7 +57,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
             Member member = memberService.findByRefreshToken(refreshToken).orElse(null);
 
             // 일치하는 회원이 없다면 null이니까 그냥 끝내.
-            if(member == null) {
+            if (member == null) {
                 filterChain.doFilter(req, resp);
                 return;
             }
@@ -71,7 +71,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
             accessToken = newAccessToken;
         }
 
-        Map<String,Object> accessTokenData = authTokenService.getDataFrom(accessToken);
+        Map<String, Object> accessTokenData = authTokenService.getDataFrom(accessToken);
 
         // 해당하는 회원의 id를 가져와서 id라는 변수에 저장해.
         // accessTokenData.get("id")는 Integer 타입이니까 형변환을 해야해.

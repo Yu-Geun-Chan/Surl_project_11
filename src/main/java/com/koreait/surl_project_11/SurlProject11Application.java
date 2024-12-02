@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing // @EntityListeners(AuditingEntityListener.class) 쓰기 위해 필요
 public class SurlProject11Application {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		SpringApplication.run(SurlProject11Application.class, args);
-	}
+        SpringApplication.run(SurlProject11Application.class, args);
+    }
 
 }

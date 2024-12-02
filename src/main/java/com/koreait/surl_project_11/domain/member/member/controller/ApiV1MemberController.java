@@ -35,24 +35,6 @@ public class ApiV1MemberController {
     private final AuthService authService;
     private final AuthTokenService authTokenService;
 
-    @AllArgsConstructor
-    @Getter
-    public static class MemberJoinReqBody {
-        @NotBlank // -> 써먹으려면 객체 선언부에 @Valid 어노테이션을 붙여야한다.
-        private String username;
-        @NotBlank
-        private String password;
-        @NotBlank
-        private String nickname;
-    }
-
-    // 응답 양식
-    @AllArgsConstructor
-    @Getter
-    public static class MemberJoinRespBody {
-        MemberDto item;
-    }
-
     // POST api/v1/members/join
     @PostMapping("") // "join"을 쓰지않고 ""(빈문자열)로 해도 된다. why? -> POST니까
     @Transactional
@@ -67,21 +49,6 @@ public class ApiV1MemberController {
                         new MemberDto(joinRs.getData())
                 )
         );
-    }
-
-    @AllArgsConstructor
-    @Getter
-    public static class MemberLoginReqBody {
-        @NotBlank
-        private String username;
-        @NotBlank
-        private String password;
-    }
-
-    @AllArgsConstructor
-    @Getter
-    public static class MemberLoginRespBody {
-        MemberDto item;
     }
 
     @PostMapping("/login")
@@ -113,6 +80,39 @@ public class ApiV1MemberController {
         rq.removeCookie("actorUsername");
         rq.removeCookie("actorPassword");
         return RsData.OK;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class MemberJoinReqBody {
+        @NotBlank // -> 써먹으려면 객체 선언부에 @Valid 어노테이션을 붙여야한다.
+        private String username;
+        @NotBlank
+        private String password;
+        @NotBlank
+        private String nickname;
+    }
+
+    // 응답 양식
+    @AllArgsConstructor
+    @Getter
+    public static class MemberJoinRespBody {
+        MemberDto item;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class MemberLoginReqBody {
+        @NotBlank
+        private String username;
+        @NotBlank
+        private String password;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class MemberLoginRespBody {
+        MemberDto item;
     }
 }
 

@@ -23,12 +23,12 @@ public class SecurityConfig {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers(HttpMethod.POST,"/api/*/members/", "/api/*/members/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/*/members/", "/api/*/members/login").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll() // permitAll() : 제재하지마
                                 .requestMatchers("/actuator/**").permitAll()
-                                .requestMatchers("/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/g/*").permitAll()
+                                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/g/*").permitAll()
                                 .anyRequest().authenticated() // 위에 2개가 아니라면 로그인을 검사해
                 )
                 .headers(
@@ -52,7 +52,7 @@ public class SecurityConfig {
                                     response.setStatus(403);
                                     response.getWriter().write(
                                             Ut.json.toString(
-                                                    RsData.of("403-1",request.getRequestURI() + ", " + authException.getLocalizedMessage())
+                                                    RsData.of("403-1", request.getRequestURI() + ", " + authException.getLocalizedMessage())
                                             )
                                     );
                                 }

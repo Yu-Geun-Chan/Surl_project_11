@@ -67,8 +67,8 @@ public class GlobalExceptionHandlers {
 
         return handleException(
                 new GlobalException(
-                    resultCode,
-                    msg
+                        resultCode,
+                        msg
                 )
         );
     }

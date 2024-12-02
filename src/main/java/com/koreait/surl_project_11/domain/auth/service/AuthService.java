@@ -43,14 +43,14 @@ public class AuthService {
         if (actor == null) return false;
         if (surl == null) return false;
 
-        return canGetSurl(actor,surl);
+        return canGetSurl(actor, surl);
     }
 
     private boolean canModifySurl(Member actor, Surl surl) {
         if (actor == null) return false;
         if (surl == null) return false;
 
-        return canGetSurl(actor,surl);
+        return canGetSurl(actor, surl);
     }
     // Surl 관련
 
