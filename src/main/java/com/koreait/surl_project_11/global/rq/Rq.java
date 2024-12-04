@@ -6,6 +6,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
@@ -51,17 +52,31 @@ public class Rq {
                 .orElse(defaultValue); // 없으면 기본 값
     }
 
-    public void removeCookie(String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        resp.addCookie(cookie);
+    public void removeCookie(String name) {
+        ResponseCookie cookie = ResponseCookie.from(name)
+                .path("/")
+                .maxAge(0)
+                .domain(getSiteCookieDomain())
+                .sameSite("Strict")
+                .secure(true)
+                .httpOnly(true)
+                .build();
+        resp.addHeader("Set-Cookie", cookie.toString());
     }
 
-    public void setCookie(String cookieName, String value) {
-        Cookie cookie = new Cookie(cookieName, value);
-        cookie.setMaxAge(60 * 60 * 24 * 365);
-        cookie.setPath("/");
-        resp.addCookie(cookie);
+    public void setCookie(String name, String value) {
+        ResponseCookie cookie = ResponseCookie.from(name, value)
+                .path("/")
+                .maxAge(60 * 60 * 24 * 365 * 10)
+                .domain(getSiteCookieDomain())
+                .sameSite("Strict")
+                .secure(true)
+                .httpOnly(true)
+                .build();
+        resp.addHeader("Set-Cookie", cookie.toString());
+    }
+
+    public String getSiteCookieDomain() {
+        return "localhost";
     }
 }
