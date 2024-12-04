@@ -2,6 +2,7 @@ package com.koreait.surl_project_11.global.rq;
 
 import com.koreait.surl_project_11.domain.member.member.entity.Member;
 import com.koreait.surl_project_11.domain.member.member.service.MemberService;
+import com.koreait.surl_project_11.global.app.AppConfig;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -77,6 +78,10 @@ public class Rq {
     }
 
     public String getSiteCookieDomain() {
-        return "localhost";
+        String cookieDomain = AppConfig.getSiteCookieDomain();
+
+        if (cookieDomain.equals("localhost")) return cookieDomain;
+
+        return "." + cookieDomain;
     }
 }

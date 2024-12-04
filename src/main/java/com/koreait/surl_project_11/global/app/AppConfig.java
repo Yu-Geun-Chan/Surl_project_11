@@ -40,5 +40,24 @@ public class AppConfig {
         this.accessTokenExpirationSec = accessTokenExpirationSec;
     }
 
+    @Getter
+    private static String siteFrontUrl;
+    @Value("${custom.site.frontUrl}")
+    public void setSiteFrontUrl(String siteFrontUrl) {
+        this.siteFrontUrl = siteFrontUrl;
+    }
+    @Getter
+    private static String siteBackUrl;
+    @Value("${custom.site.backUrl}")
+    public void setSiteBackUrl(String siteBackUrl) {
+        this.siteBackUrl = siteBackUrl;
+    }
+    @Getter
+    private static String siteCookieDomain;
+    @Value("${custom.site.cookieDomain}")
+    public void setSiteCookieDomain(String siteCookieDomain) {
+        this.siteCookieDomain = siteCookieDomain;
+    }
+
 }
 
