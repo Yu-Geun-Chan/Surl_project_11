@@ -43,3 +43,4 @@ db_dev_mv.db
 db_dev_trace.db
 db_dev.trace.db
 src/main/generated
+apiV1.json
