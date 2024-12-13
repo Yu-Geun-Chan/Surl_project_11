@@ -77,8 +77,8 @@ public class ApiV1MemberController {
     @Operation(summary = "로그아웃")
     public RsData<Empty> logout() {
         // 쿠키 삭제
-        rq.removeCookie("actorUsername");
-        rq.removeCookie("actorPassword");
+        rq.removeCookie("accessToken");
+        rq.removeCookie("refreshToken");
         return RsData.OK;
     }
 
