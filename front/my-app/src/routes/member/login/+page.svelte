@@ -1,32 +1,42 @@
 <script lang="ts">
+	import createClient from 'openapi-fetch';
+
+	import type { paths } from '$lib/backend/apiV1/schema';
+
+	type Client = ReturnType<typeof createClient<paths>>;
+	const client: Client = createClient<paths>({
+		baseUrl: import.meta.env.VITE_CORE_API_BASE_URL,
+		credentials: 'include'
+	});
+
 	async function submitLoginForm(this: HTMLFormElement) {
 		const form: HTMLFormElement = this;
 
 		form.username.value = form.username.value.trim();
-		if (form.username.value.length == 0) {
+		if (form.username.value.length === 0) {
 			alert('username 입력해');
 			form.username.focus();
 			return;
 		}
 		form.password.value = form.password.value.trim();
-		if (form.password.value.length == 0) {
+		if (form.password.value.length === 0) {
 			alert('password 입력해');
 			form.password.focus();
 			return;
 		}
 
-		const rs = await fetch(`${import.meta.env.VITE_CORE_API_BASE_URL}/api/v1/members/login`, {
-			method: 'POST',
-			credentials: 'include', // 타 도메인간의 쿠키 통신이 가능하도록
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
+		const { data, error } = await client.POST('/api/v1/members/login', {
+			body: {
 				username: form.username.value,
 				password: form.password.value
-			})
-		}).then((res) => res.json());
-		console.log(rs);
+			}
+		});
+		if (data) {
+			data.msg && alert(data.msg);
+			location.href = '/';
+		} else if (error) {
+			error.msg && alert(error.msg);
+		}
 	}
 </script>
 
@@ -34,13 +44,13 @@
 	<div>
 		<label>
 			<span>username</span>
-			<input type="text" name="username" placeholder="username을 입력해주세요." />
+			<input type="text" name="username" placeholder="username 써" />
 		</label>
 	</div>
 	<div>
 		<label>
 			<span>password</span>
-			<input type="text" name="password" placeholder="password를 입력해주세요." />
+			<input type="text" name="password" placeholder="password 써" />
 		</label>
 	</div>
 	<div>
