@@ -1,44 +1,28 @@
 <script lang="ts">
-	import type { components } from '$lib/backend/apiV1/schema';
 	import rq from '$lib/rq/rq.svelte';
-
-	let member: components['schemas']['MemberDto'] | null = $state(null);
-	let errorMessage: string | null = $state(null);
-
-	async function getMe() {
-		const { data, error } = await rq.getClient().GET('/api/v1/members/me');
-
-		if (data) {
-			member = data.data.item;
-		} else if (error) {
-			errorMessage = error.msg;
-		}
-	}
-
-	$effect(() => {
-		getMe();
-	});
 </script>
 
-{#if member}
+{#if rq.isLogin()}
 	<div>
 		<div>
 			<span>아이디</span>
-			<span>{member.username}</span>
+			<span>{rq.member.username}</span>
 		</div>
 		<div>
 			<span>닉네임</span>
-			<span>{member.nickname}</span>
+			<span>{rq.member.nickname}</span>
 		</div>
 		<div>
 			<span>가입일</span>
-			<span>{member.createDate}</span>
+			<span>{rq.member.createDate}</span>
 		</div>
 		<div>
 			<span>수정일</span>
-			<span>{member.modifyDate}</span>
+			<span>{rq.member.modifyDate}</span>
 		</div>
 	</div>
-{:else if errorMessage !== null}
-	<div>에러 발생: {errorMessage}</div>
+{:else}
+	<div>
+		<a href="/member/login">로그인</a> 후 이용해주세요.
+	</div>
 {/if}
