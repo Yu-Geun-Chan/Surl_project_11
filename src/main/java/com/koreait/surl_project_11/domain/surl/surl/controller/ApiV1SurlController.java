@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -143,6 +144,7 @@ public class ApiV1SurlController {
     @AllArgsConstructor
     @Getter
     public static class SurlAddRespBody {
+        @NonNull
         private SurlDto item;
     }
 
@@ -150,6 +152,7 @@ public class ApiV1SurlController {
     @AllArgsConstructor
     @Getter
     public static class SurlGetRespBody {
+        @NonNull
         private SurlDto item;
     }
 
@@ -157,6 +160,7 @@ public class ApiV1SurlController {
     @AllArgsConstructor
     @Getter
     public static class SurlGetItemsRespBody {
+        @NonNull
         private List<SurlDto> item;
     }
 
@@ -174,6 +178,7 @@ public class ApiV1SurlController {
     @AllArgsConstructor
     @Getter
     public static class SurlModifyRespBody {
+        @NonNull
         private SurlDto item;
     }
 }

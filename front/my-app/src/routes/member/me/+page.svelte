@@ -17,7 +17,7 @@
 		const { data, error } = await client.GET('/api/v1/members/me');
 
 		if (data) {
-			member = data.data.item!;
+			member = data.data.item;
 		} else if (error) {
 			errorMessage = error.msg;
 		}

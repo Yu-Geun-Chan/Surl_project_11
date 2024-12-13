@@ -4,20 +4,28 @@ import com.koreait.surl_project_11.domain.surl.surl.entity.Surl;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 
-// 보여주기용(Entity는 외부에 직접 노출시키면 안되기 때문)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class SurlDto {
+    @NonNull
     private long id;
+    @NonNull
     private LocalDateTime createDate;
+    @NonNull
     private LocalDateTime modifyDate;
+    @NonNull
     private long authorId;
+    @NonNull
     private String authorName;
+    @NonNull
     private String body;
+    @NonNull
     private String url;
+    @NonNull
     private long count;
 
     public SurlDto(Surl surl) {
@@ -30,6 +38,5 @@ public class SurlDto {
         this.url = surl.getUrl();
         this.count = surl.getCount();
     }
-
 
 }

@@ -4,18 +4,24 @@ import com.koreait.surl_project_11.domain.member.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 
-// 보여주기용(Entity는 외부에 직접 노출시키면 안되기 때문)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class MemberDto {
+    @NonNull
     private long id;
+    @NonNull
     private LocalDateTime createDate;
+    @NonNull
     private LocalDateTime modifyDate;
+    @NonNull
     private String username;
+    @NonNull
     private String nickname;
+
 
     public MemberDto(Member member) {
         this.id = member.getId();

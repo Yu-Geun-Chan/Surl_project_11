@@ -11,6 +11,7 @@ import com.koreait.surl_project_11.global.rq.Rq;
 import com.koreait.surl_project_11.global.rsData.RsData;
 import com.koreait.surl_project_11.standard.dto.Empty;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,26 +29,28 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
+@SecurityRequirement(name = "bearerAuth")
 @Tag(name = "ApiMemberController", description = "회원 CRUD 컨트롤러")
 public class ApiV1MemberController {
-
     private final MemberService memberService;
     private final Rq rq;
     private final AuthService authService;
     private final AuthTokenService authTokenService;
 
-    // POST api/v1/members/join
-    @PostMapping("") // "join"을 쓰지않고 ""(빈문자열)로 해도 된다. why? -> POST니까
+    // POST /api/v1/members
+    @PostMapping("")
     @Transactional
     @Operation(summary = "회원가입")
     public RsData<MemberJoinRespBody> join(
-            @RequestBody @Valid MemberJoinReqBody requestBody // @Valid : @NotBlank 쓰려면 해야됨
+            @RequestBody @Valid MemberJoinReqBody requestBody
     ) {
         RsData<Member> joinRs = memberService.join(requestBody.username, requestBody.password, requestBody.nickname);
 
         return joinRs.newDataOf(
                 new MemberJoinRespBody(
-                        new MemberDto(joinRs.getData())
+                        new MemberDto(
+                                joinRs.getData()
+                        )
                 )
         );
     }
@@ -57,7 +61,9 @@ public class ApiV1MemberController {
     public RsData<MemberLoginRespBody> login(
             @RequestBody @Valid MemberLoginReqBody requestBody
     ) {
+
         Member member = memberService.findByUsername(requestBody.username).orElseThrow(() -> new GlobalException("401-1", "해당 회원은 없다"));
+
         if (!memberService.matchPassword(requestBody.password, member.getPassword())) {
             throw new GlobalException("401-2", "비번 틀림");
         }
@@ -77,15 +83,35 @@ public class ApiV1MemberController {
     @Operation(summary = "로그아웃")
     public RsData<Empty> logout() {
         // 쿠키 삭제
+
         rq.removeCookie("accessToken");
         rq.removeCookie("refreshToken");
+
         return RsData.OK;
     }
 
     @AllArgsConstructor
     @Getter
+    public static class MemberMeRespBody {
+        @NonNull
+        MemberDto item;
+    }
+
+    @GetMapping("/me")
+    @Transactional
+    @Operation(summary = "내 정보", description = "현재 로그인한 회원의 정보")
+    public RsData<MemberMeRespBody> getMe() {
+        return RsData.of(
+                new MemberMeRespBody(
+                        new MemberDto(rq.getMember())
+                )
+        );
+    }
+
+    @AllArgsConstructor
+    @Getter
     public static class MemberJoinReqBody {
-        @NotBlank // -> 써먹으려면 객체 선언부에 @Valid 어노테이션을 붙여야한다.
+        @NotBlank
         private String username;
         @NotBlank
         private String password;
@@ -93,10 +119,10 @@ public class ApiV1MemberController {
         private String nickname;
     }
 
-    // 응답 양식
     @AllArgsConstructor
     @Getter
     public static class MemberJoinRespBody {
+        @NonNull
         MemberDto item;
     }
 
@@ -112,7 +138,9 @@ public class ApiV1MemberController {
     @AllArgsConstructor
     @Getter
     public static class MemberLoginRespBody {
+        @NonNull
         MemberDto item;
     }
+
 }
 

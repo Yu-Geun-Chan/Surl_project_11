@@ -4,19 +4,26 @@ import com.koreait.surl_project_11.domain.article.article.entity.Article;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 
-// 보여주기용(Entity는 외부에 직접 노출시키면 안되기 때문)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ArticleDto {
+    @NonNull
     private long id;
+    @NonNull
     private LocalDateTime createDate;
+    @NonNull
     private LocalDateTime modifyDate;
+    @NonNull
     private long authorId;
+    @NonNull
     private String authorName;
+    @NonNull
     private String title;
+    @NonNull
     private String body;
 
     public ArticleDto(Article article) {
@@ -28,4 +35,5 @@ public class ArticleDto {
         this.title = article.getTitle();
         this.body = article.getBody();
     }
+
 }
