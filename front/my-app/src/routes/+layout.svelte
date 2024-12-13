@@ -1,16 +1,9 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import createClient from 'openapi-fetch';
-	import type { paths } from '$lib/backend/apiV1/schema';
-	type Client = ReturnType<typeof createClient<paths>>;
-	const client: Client = createClient<paths>({
-		baseUrl: import.meta.env.VITE_CORE_API_BASE_URL,
-		credentials: 'include'
-	});
+	import rq from '$lib/rq/rq.svelte';
 
 	async function logout() {
-		await client.DELETE('/api/v1/members/logout');
-		goto('/');
+		await rq.getClient().DELETE('/api/v1/members/logout');
+		rq.goto('/');
 	}
 </script>
 
