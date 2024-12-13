@@ -13,6 +13,7 @@
 		<a href="/">메인</a>
 		<a href="/member/login">로그인</a>
 		<button type="button" on:click|preventDefault={logout}>로그아웃</button>
+		<a href="/member/me">내 정보</a>
 	</nav>
 </header>
 
