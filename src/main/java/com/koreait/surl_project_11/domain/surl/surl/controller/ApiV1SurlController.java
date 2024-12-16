@@ -133,7 +133,6 @@ public class ApiV1SurlController {
     @AllArgsConstructor
     @Getter
     public static class SurlAddReqBody {
-        @NotBlank
         private String body;
         @NotBlank
         private String url;

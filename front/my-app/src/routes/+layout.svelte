@@ -21,6 +21,8 @@
 		{#if rq.isLogout()}
 			<a href="/member/login">로그인</a>
 			<a href="/member/join">회원가입</a>
+			<a href="/surl/list">SURL 목록</a>
+			<a href="/surl/add">SURL 등록</a>
 		{/if}
 	</nav>
 </header>
