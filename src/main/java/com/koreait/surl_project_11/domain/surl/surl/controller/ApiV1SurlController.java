@@ -166,7 +166,6 @@ public class ApiV1SurlController {
     @AllArgsConstructor
     @Getter
     public static class SurlModifyReqBody {
-        @NotBlank
         private String body;
         @NotBlank
         private String url;

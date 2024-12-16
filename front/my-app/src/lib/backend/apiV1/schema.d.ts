@@ -55,7 +55,7 @@ export interface components {
 			data: components['schemas']['Empty'];
 		};
 		SurlModifyReqBody: {
-			body: string;
+			body?: string;
 			url: string;
 		};
 		RsDataSurlModifyRespBody: {

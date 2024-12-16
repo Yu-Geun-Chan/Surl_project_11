@@ -36,6 +36,9 @@
 			<a href="/surl/{surl.id}">{surl.id}</a> : {surl.url}
 			<br />
 			{surl.body}
+
+			<a href="/surl/{surl.id}/edit">수정</a>
+
 			<button
 				type="button"
 				on:click|preventDefault={() => confirm('정말로 삭제하시겠습니까?') && deleteSurl(surl)}
